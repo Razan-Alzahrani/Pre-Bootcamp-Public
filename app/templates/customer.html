@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+.register{
+    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+    margin-top: 3%;
+    padding: 3%;
+}
+.register-left{
+    height: 300px;
+    text-align: center;
+    color: #fff;
+    margin-top: 4%;
+}
+.register-right{
+    background: #f8f9fa;
+    border-top-left-radius: 10% 50%;
+    border-bottom-left-radius: 10% 50%;
+    padding: 10px;
+    display: flex;
+    
+}
+.register-left img{
+    margin-top: 15%;
+    margin-bottom: 5%;
+    width: 25%;
+    -webkit-animation: mover 2s infinite  alternate;
+    animation: mover 1s infinite  alternate;
+}
+.search{
+    margin-left:70px;
+}
+a{
+    color:white;
+}
+img{
+    width: 200px;
+    padding: 10px;
+    margin-top: 10px;
+    margin-left: 30px;
+
+
+
+}
+table{
+    padding: 40px;
+    /* margin-top: 40px; */
+    margin-left: 20px;
+
+}
+.card {
+    margin-top: 40px;
+    margin-left: 60px;
+    height:400px;
+    width: 400px;
+}
+.bg{
+    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+    border-radius:30px;
+    border-top:#3931af ;
+    border-right:#3931af ;
+    border-left:#3931af ;
+    border-bottom:#3931af ;
+    padding: 10px;
+    margin-top:20px; 
+    margin-left:50px;
+    color: #fff;
+    }
+
+</style>
+</head>
+<body>
+    <div class="container register">
+        <div class="row">
+            <div class="col-md-3 register-left">
+                <img src="C:\Users\Rooz albasha\Desktop\project\weather\log in logo.jpg" alt="">
+                <h3>Welcome {{request.session.fname}} 
+                </h3> 
+                <a href='add_proj'>Add Project </a>|
+
+                <a href='/logout'>Logout</a>
+                <div class="form-group">
+<!-- عرض جميع الاقسام  -->
+                </div>
+            </div>
+            
+            <div class="col-md-9 register-right">
+                
+
+            <div class="card border-primary mb-2" style="max-width: 18rem;">
+                <div class="card-header">My Projects :</div>
+                    <div class="card-body text-primary">
+                        {% for proj in all_projects  %}
+                        {% if proj.customer.id == request.session.uid %}
+                        <table>
+                            <tr>
+                                <td>{{proj.proj_name}}
+                                    {{proj.start_date}}
+                                    {{proj.deadline}}
+                                    {{proj.discription}}<br>
+                                    <a href='/delete/{{proj.id}}'><button class="bg">Delete Project</button></a>
+                                </td>
+                            </tr>
+                            
+                        </table>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+            </div>
+
+            <div class="card border-success mb-2" style="max-width: 18rem;">
+                <div class="card-header">The Offers :</div>
+                <div class="card-body text-success">
+                    <table>
+                        {% for req in all_req  %}
+                        <tr>
+                            <td>{{req.request}}
+                            From: {{req.offer_from.fname}} {{req.offer_from.lname}}<br>
+                            <a href="/view/{{req.id}}"><button class="bg" >View Details</button></a>
+            
+                        </td>
+                        </tr>
+                        {% endfor %}
+
+                    </table>
+                </div>
+            </div>
+        </div>
+            
+    </div>
+</body>
+</html>
